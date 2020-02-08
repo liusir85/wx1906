@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    echo 123123123123;die;
+    echo 666666666;die;
 //    phpinfo();die;
     return view('welcome');
 });
