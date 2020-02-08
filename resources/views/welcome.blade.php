@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    wx1906
+                    123123
                 </div>
 
                 <div class="links">
