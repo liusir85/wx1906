@@ -30,3 +30,5 @@ Route::get('/guzzle/post1','TestController@guzzlePost1');  //guzzle post
 Route::get('/guzzle/post2','TestController@guzzlePost2');  //guzzle post 上传文件
 
 Route::get('/test1','TestController@test1');
+
+Route::get('/encrypt','TestController@encrypt');

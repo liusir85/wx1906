@@ -158,11 +158,31 @@ class TestController extends Controller
         $data="Hello";
         $number="11111";
         //接口服务器地址
-        $url="http://1905liuqingyuan.comcto.com/test/md5Test2?data=".$data.'&number'.$number;   //接口线上地址
-        echo $url;
+        $url="http://1905liuqingyuan.comcto.com/test/md5Test2?data=".$data.'&number='.$number;   //接口线上地址
+        echo $url;echo "<br>";
 
         //todo 签名
         $response=file_get_contents($url);
         var_dump($response);
     }
+
+    public function encrypt(){
+        //ord
+        $str='Hello';
+        echo "原文：".$str;echo "<br>";
+        $length=strlen($str);  //获取字符串长度
+        echo "length：".$length;echo "<hr>";
+        $new_str='';
+        for($i=0;$i<$length;$i++)
+        {
+            echo $str[$i] . '>' . ord($str[$i]);echo "<br>";
+            $code=ord($str[$i]) + 1;
+            echo "编码 $str[$i]" . '>' .$code . '>' . chr($code);echo "<br>";
+            $new_str .=chr($code);
+        }
+        echo "br";
+        echo "密文：" .$new_str;echo "<br>";
+    }
+
+    
 }
