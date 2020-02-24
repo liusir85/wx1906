@@ -169,9 +169,9 @@ class TestController extends Controller
     public function encrypt(){
         //ord
         $str='Hello';
-        echo "原文：".$str;echo "<br>";
+//        echo "原文：".$str;echo "<br>";
         $length=strlen($str);  //获取字符串长度
-        echo "length：".$length;echo "<hr>";
+//        echo "length：".$length;echo "<hr>";
         $new_str='';
         for($i=0;$i<$length;$i++)
         {
@@ -180,9 +180,58 @@ class TestController extends Controller
             echo "编码 $str[$i]" . '>' .$code . '>' . chr($code);echo "<br>";
             $new_str .=chr($code);
         }
-        echo "br";
-        echo "密文：" .$new_str;echo "<br>";
+
+        //请求接口将加密数据发送
+        $url = 'http://api.1906.com/test/decrypt?data='.$new_str;
+        $response=file_get_contents($url);
+        var_dump($response);
     }
 
-    
+    public function decrypt(){
+        $data='Ifmmp!Xpsme';
+        echo "密文".$data;echo "<br>";
+
+        //解密
+        $length=strlen($data);
+
+        $str='';
+        for($i=0;$i<$length;$i++){
+            echo $data[$i] . '>' .ord($data[$i]);echo "<br>";
+            $code=ord($data[$i])-1;
+            echo "解码" .$data[$i] . '>' . chr($code);echo "<br>";
+            $str .=chr($code);
+        }
+        echo "解密后数据：". $str;
+    }
+
+    public function encrypt1(){
+//        $method_arr=openssl_get_cipher_methods();
+//        echo "<pre>";print_r($method_arr);echo "</pre>";
+//        die;
+//        $data='hello'; //要加密的数据
+//        $method='';  //要的加算法
+
+        $key='666';
+        $data='hello';  //要加密数据
+        $method='aes-128-cbc';   //加算法
+        $iv='abcdefg1234zxcdf';  //必须为16个
+
+        //加密
+        $enc_str=openssl_encrypt($data,$method,$key,OPENSSL_RAW_DATA,$iv);
+        echo "原始数据：".$data;echo "<br>";
+        echo "加密后的密文：".$enc_str;echo "<br>";
+
+        //base64编码
+        $base64_str=base64_encode($enc_str);
+        echo "base64编码的密文：".$base64_str;
+
+//        //解密
+//        $dec_data=openssl_decrypt($enc_str,$method,$key,OPENSSL_RAW_DATA,$iv);
+//        var_dump($dec_data);
+
+        //将加密后的数据发送出
+        $url="http://api.1906.com/test/decrypt1?data=".$base64_str;
+        $response=file_get_contents($url);
+        var_dump($response);
+    }
 }
